@@ -1,0 +1,290 @@
+.profile-page {
+  padding: 40px 0;
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.profile-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.profile-header p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.profile-content {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/* Sidebar */
+.profile-sidebar {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+}
+
+.profile-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile-tab {
+  padding: 15px 20px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 1rem;
+  color: #666;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.profile-tab:hover {
+  background: #f8f9fa;
+  color: #ff6b35;
+}
+
+.profile-tab.active {
+  background: #ff6b35;
+  color: white;
+}
+
+/* Main Content */
+.profile-main {
+  background: white;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-section h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.section-header h2 {
+  margin: 0;
+}
+
+/* Profile Form */
+.profile-form {
+  max-width: 600px;
+}
+
+/* Reservations */
+.reservations-list {
+  display: grid;
+  gap: 25px;
+}
+
+.reservation-item {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 25px;
+  border-left: 4px solid #ff6b35;
+}
+
+.reservation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.reservation-header h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.reservation-status {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.reservation-status.confirmed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.reservation-status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.reservation-details {
+  margin-bottom: 20px;
+}
+
+.reservation-details p {
+  margin: 8px 0;
+  color: #666;
+}
+
+.reservation-actions {
+  display: flex;
+  gap: 15px;
+}
+
+/* Favorites */
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 25px;
+}
+
+.favorite-item {
+  background: #f8f9fa;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.favorite-item:hover {
+  transform: translateY(-2px);
+}
+
+.favorite-item img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.favorite-content {
+  padding: 20px;
+}
+
+.favorite-content h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.favorite-content p {
+  color: #666;
+  margin-bottom: 12px;
+}
+
+.favorite-rating {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #666;
+}
+
+/* Settings */
+.settings-group {
+  margin-bottom: 40px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #e1e5e9;
+}
+
+.settings-group:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.settings-group h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.checkbox-group .checkbox-label {
+  font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .profile-sidebar {
+    order: 2;
+  }
+
+  .profile-main {
+    order: 1;
+  }
+
+  .profile-tabs {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 10px;
+  }
+
+  .profile-tab {
+    white-space: nowrap;
+    min-width: 150px;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .reservation-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .reservation-actions {
+    flex-direction: column;
+  }
+
+  .favorites-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-header h1 {
+    font-size: 2rem;
+  }
+
+  .profile-main {
+    padding: 25px 20px;
+  }
+
+  .profile-sidebar {
+    padding: 20px;
+  }
+} 

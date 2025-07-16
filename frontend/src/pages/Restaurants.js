@@ -47,16 +47,7 @@ const Restaurants = () => {
           image: "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=300&fit=crop",
           description: "Elegant French dining with classic dishes."
         },
-        {
-          id: 4,
-          name: "Taco Fiesta",
-          cuisine: "Mexican",
-          location: "Eastside",
-          rating: 4.4,
-          price: "$",
-          image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=400&h=300&fit=crop",
-          description: "Authentic Mexican street food and tacos."
-        },
+        
         {
           id: 5,
           name: "Golden Dragon",
@@ -76,7 +67,28 @@ const Restaurants = () => {
           price: "$$",
           image: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400&h=300&fit=crop",
           description: "Rich Indian flavors and aromatic spices."
-        }
+        },
+        {
+          id: 7,
+          name: "Burger Haven",
+          cuisine: "American",
+          location: "Uptown",
+          rating: 4.3,
+          price: "$",
+          image: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=300&fit=crop",
+          description: "Juicy burgers, crispy fries, and classic American comfort food."
+        },
+        {
+          id: 8,
+          name: "Green Leaf Vegan",
+          cuisine: "Vegan",
+          location: "Central",
+          rating: 4.6,
+          price: "$$",
+          image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop",
+          description: "Delicious plant-based meals and fresh organic juices."
+        },
+      
       ];
       setRestaurants(mockRestaurants);
       setFilteredRestaurants(mockRestaurants);
@@ -168,6 +180,51 @@ const Restaurants = () => {
         </div>
       </section>
 
+      {/* How It Works Section */}
+      <section className="section how-it-works">
+        <div className="container">
+          <h2 className="section-title">How It Works</h2>
+          <div className="how-it-works-grid">
+            <div className="how-step">
+              <span className="how-icon">🔎</span>
+              <h3>Search</h3>
+              <p>Find restaurants by cuisine, location, or rating.</p>
+            </div>
+            <div className="how-step">
+              <span className="how-icon">📅</span>
+              <h3>Book</h3>
+              <p>Reserve your table in just a few clicks.</p>
+            </div>
+            <div className="how-step">
+              <span className="how-icon">🍽️</span>
+              <h3>Dine</h3>
+              <p>Enjoy your meal and share your experience!</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="section testimonials">
+        <div className="container">
+          <h2 className="section-title">What Our Users Say</h2>
+          <div className="testimonials-grid">
+            <div className="testimonial-card">
+              <p>"Smart Dining made it so easy to find and book the perfect restaurant for our anniversary!"</p>
+              <span>- Priya S.</span>
+            </div>
+            <div className="testimonial-card">
+              <p>"I love the verified reviews. I always know what to expect before I go."</p>
+              <span>- Alex T.</span>
+            </div>
+            <div className="testimonial-card">
+              <p>"The reservation process is super quick and hassle-free."</p>
+              <span>- Maria L.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Results Section */}
       <section className="section">
         <div className="container">
@@ -209,10 +266,11 @@ const Restaurants = () => {
             <div className="restaurants-grid">
               {filteredRestaurants.map((restaurant) => (
                 <div key={restaurant.id} className="restaurant-card">
-                  <img 
-                    src={restaurant.image} 
+                  <img
+                    src={restaurant.image || '/default-restaurant.png'}
                     alt={restaurant.name}
                     className="restaurant-image"
+                    onError={e => { e.target.onerror = null; e.target.src = '/default-restaurant.png'; }}
                   />
                   <div className="restaurant-content">
                     <div className="restaurant-header">

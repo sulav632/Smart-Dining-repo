@@ -1,10 +1,12 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 require('dotenv').config();
+
+// Sequelize setup
+const { Sequelize } = require('sequelize');
 
 const authRoutes = require('./routes/auth');
 const restaurantRoutes = require('./routes/restaurants');
@@ -64,22 +66,33 @@ app.use('*', (req, res) => {
   res.status(404).json({ message: 'Route not found' });
 });
 
-// Database connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/smart-dining', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => {
-  console.log('✅ Connected to MongoDB');
-  app.listen(PORT, () => {
-    console.log(`🚀 Server running on port ${PORT}`);
-    console.log(`📱 API available at http://localhost:${PORT}`);
-    console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
+// Sequelize MySQL connection
+const sequelize = new Sequelize(
+  process.env.MYSQL_DATABASE || 'smart_dining',
+  process.env.MYSQL_USER || 'root',
+  process.env.MYSQL_PASSWORD || '',
+  {
+    host: process.env.MYSQL_HOST || 'localhost',
+    dialect: 'mysql',
+    logging: false,
+  }
+);
+
+sequelize.authenticate()
+  .then(() => {
+    console.log('✅ Connected to MySQL');
+    return sequelize.sync();
+  })
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`🚀 Server running on port ${PORT}`);
+      console.log(`📱 API available at http://localhost:${PORT}`);
+      console.log(`🔗 Health check: http://localhost:${PORT}/api/health`);
+    });
+  })
+  .catch((error) => {
+    console.error('❌ MySQL connection error:', error);
+    process.exit(1);
   });
-})
-.catch((error) => {
-  console.error('❌ MongoDB connection error:', error);
-  process.exit(1);
-});
 
 module.exports = app; 

@@ -1,76 +1,65 @@
-const mongoose = require('mongoose');
+const { DataTypes, Model } = require('sequelize');
+const sequelize = require('../sequelize');
 
-const menuItemSchema = new mongoose.Schema({
-  restaurant: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Restaurant',
-    required: [true, 'Restaurant is required']
-  },
+class MenuItem extends Model {}
+
+MenuItem.init({
+  // restaurantId will be a foreign key, association can be set up later
   name: {
-    type: String,
-    required: [true, 'Menu item name is required'],
-    trim: true,
-    maxlength: [100, 'Menu item name cannot exceed 100 characters']
+    type: DataTypes.STRING(100),
+    allowNull: false,
   },
   description: {
-    type: String,
-    trim: true,
-    maxlength: [300, 'Description cannot exceed 300 characters']
+    type: DataTypes.STRING(300),
+    allowNull: true,
   },
   price: {
-    type: Number,
-    required: [true, 'Price is required'],
-    min: [0, 'Price cannot be negative']
+    type: DataTypes.FLOAT,
+    allowNull: false,
+    validate: { min: 0 },
   },
   category: {
-    type: String,
-    required: [true, 'Category is required'],
-    enum: ['appetizer', 'main-course', 'dessert', 'beverage', 'side-dish'],
-    default: 'main-course'
+    type: DataTypes.ENUM('appetizer', 'main-course', 'dessert', 'beverage', 'side-dish'),
+    allowNull: false,
+    defaultValue: 'main-course',
   },
   imageUrl: {
-    type: String,
-    trim: true,
-    maxlength: [200, 'Image URL cannot exceed 200 characters']
+    type: DataTypes.STRING(200),
+    allowNull: true,
   },
   isVegetarian: {
-    type: Boolean,
-    default: false
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   },
   isVegan: {
-    type: Boolean,
-    default: false
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   },
   isGlutenFree: {
-    type: Boolean,
-    default: false
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   },
   isSpicy: {
-    type: Boolean,
-    default: false
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
   },
-  allergens: [{
-    type: String,
-    enum: ['dairy', 'eggs', 'fish', 'shellfish', 'tree-nuts', 'peanuts', 'wheat', 'soy']
-  }],
+  allergens: {
+    type: DataTypes.JSON, // Store as array of strings
+    allowNull: true,
+  },
   isAvailable: {
-    type: Boolean,
-    default: true
+    type: DataTypes.BOOLEAN,
+    defaultValue: true,
   },
   preparationTime: {
-    type: Number,
-    min: [0, 'Preparation time cannot be negative'],
-    default: 15
+    type: DataTypes.INTEGER,
+    defaultValue: 15,
+    validate: { min: 0 },
   }
 }, {
-  timestamps: true
+  sequelize,
+  modelName: 'MenuItem',
+  timestamps: true,
 });
 
-// Index for search functionality
-menuItemSchema.index({ 
-  name: 'text', 
-  description: 'text',
-  category: 'text'
-});
-
-module.exports = mongoose.model('MenuItem', menuItemSchema); 
+module.exports = MenuItem; 

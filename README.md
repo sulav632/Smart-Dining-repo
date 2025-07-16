@@ -14,10 +14,10 @@ A modern web application for restaurant discovery, reservations, and dining mana
 - **Favorites**: Save and manage favorite restaurants
 - **Reviews & Ratings**: Rate and review dining experiences
 
-### Backend (Node.js + Express + MongoDB)
+### Backend (Node.js + Express + MySQL)
 - **RESTful API**: Complete CRUD operations
 - **JWT Authentication**: Secure token-based authentication
-- **MongoDB Database**: NoSQL database with Mongoose ODM
+- **MySQL Database**: Relational database with Sequelize ORM
 - **Input Validation**: Request validation with express-validator
 - **Error Handling**: Comprehensive error handling middleware
 - **Rate Limiting**: API rate limiting for security
@@ -35,8 +35,8 @@ A modern web application for restaurant discovery, reservations, and dining mana
 ### Backend
 - **Node.js** - JavaScript runtime
 - **Express.js** - Web framework
-- **MongoDB** - NoSQL database
-- **Mongoose** - Object Data Modeling
+- **MySQL** - Relational database
+- **Sequelize** - Object Relational Mapping
 - **JWT** - JSON Web Tokens for authentication
 - **bcryptjs** - Password hashing
 - **express-validator** - Input validation
@@ -48,7 +48,30 @@ A modern web application for restaurant discovery, reservations, and dining mana
 ### Prerequisites
 - Node.js (v14 or higher)
 - npm (comes with Node.js)
-- MongoDB (v4.4 or higher)
+- MySQL (v8.0 or higher)
+
+### MySQL Setup
+
+1. **Install MySQL** (if not already installed)
+   - On Ubuntu: `sudo apt install mysql-server`
+   - On macOS: `brew install mysql`
+   - On Windows: [Download MySQL](https://dev.mysql.com/downloads/installer/)
+
+2. **Start MySQL Service**
+   ```bash
+   sudo systemctl start mysql  # Linux
+   brew services start mysql   # macOS
+   # Windows: MySQL usually starts automatically
+   ```
+
+3. **Create Database and User**
+   ```sql
+   CREATE DATABASE smart_dining;
+   CREATE USER 'root'@'localhost' IDENTIFIED BY 'your_password';
+   GRANT ALL PRIVILEGES ON smart_dining.* TO 'root'@'localhost';
+   FLUSH PRIVILEGES;
+   ```
+   Replace `'root'` and `'your_password'` with your actual MySQL username and password. Update `backend/config.env` accordingly.
 
 ### Quick Start
 
@@ -58,13 +81,28 @@ A modern web application for restaurant discovery, reservations, and dining mana
    cd smart-dining
    ```
 
-2. **Run the setup script**
+2. **Configure Environment Variables**
+   - Copy `backend/config.env` as needed and set your MySQL credentials:
+     ```env
+     PORT=8080
+     NODE_ENV=development
+     MYSQL_HOST=localhost
+     MYSQL_DATABASE=smart_dining
+     MYSQL_USER=root
+     MYSQL_PASSWORD=your_password
+     JWT_SECRET=your-secret-key
+     JWT_EXPIRES_IN=24h
+     FRONTEND_URL=http://localhost:3000
+     ```
+
+3. **Start the backend server**
    ```bash
-   chmod +x setup.sh
-   ./setup.sh
+   cd backend
+   npm install
+   npm run dev
    ```
 
-3. **Start MongoDB** (if not already running)
+4. **Start MongoDB** (if not already running)
    ```bash
    # Linux
    sudo systemctl start mongod
@@ -74,12 +112,6 @@ A modern web application for restaurant discovery, reservations, and dining mana
    
    # Windows
    net start MongoDB
-   ```
-
-4. **Start the backend server**
-   ```bash
-   cd backend
-   npm run dev
    ```
 
 5. **Start the frontend server** (in a new terminal)
@@ -134,6 +166,8 @@ A modern web application for restaurant discovery, reservations, and dining mana
 - `GET /api/users/favorites` - Get user favorites
 
 ## 🗄️ Database Schema
+
+*The application uses a relational schema managed by Sequelize ORM and MySQL. Table structures are defined in the backend/models directory.*
 
 ### User
 - firstName, lastName, email, password
@@ -228,12 +262,15 @@ This creates:
 ## 🚀 Deployment
 
 ### Environment Variables
-Create a `.env` file in the backend directory:
+Create a `config.env` file in the backend directory:
 
 ```env
 PORT=8080
 NODE_ENV=development
-MONGODB_URI=mongodb://localhost:27017/smart-dining
+MYSQL_HOST=localhost
+MYSQL_DATABASE=smart_dining
+MYSQL_USER=root
+MYSQL_PASSWORD=your_password
 JWT_SECRET=your-secret-key
 JWT_EXPIRES_IN=24h
 FRONTEND_URL=http://localhost:3000
@@ -241,7 +278,7 @@ FRONTEND_URL=http://localhost:3000
 
 ### Production Deployment
 1. Set `NODE_ENV=production`
-2. Use a production MongoDB instance
+- Use a production MySQL instance
 3. Set secure JWT secret
 4. Configure CORS for production domain
 5. Use environment variables for all sensitive data

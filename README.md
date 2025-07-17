@@ -102,25 +102,14 @@ A modern web application for restaurant discovery, reservations, and dining mana
    npm run dev
    ```
 
-4. **Start MongoDB** (if not already running)
-   ```bash
-   # Linux
-   sudo systemctl start mongod
-   
-   # macOS
-   brew services start mongodb-community
-   
-   # Windows
-   net start MongoDB
-   ```
 
-5. **Start the frontend server** (in a new terminal)
+4. **Start the frontend server** (in a new terminal)
    ```bash
    cd frontend
    npm start
    ```
 
-6. **Access the application**
+5. **Access the application**
    - Frontend: http://localhost:3000
    - Backend API: http://localhost:8080
    - API Health Check: http://localhost:8080/api/health
